@@ -1,0 +1,20 @@
+case_id: fake_atlassian_customer
+incident_id: fake_atlassian_customer
+title: Atlassian URL must not become customer
+visible_events:
+  - "09:00 IC: Link for context https://zuora.atlassian.net/browse/INC-12345"
+  - "09:01 Support: Seeing errors but customer impact is not confirmed."
+hidden_future_event_ids: []
+service_catalog_snapshot_ids: []
+memory_snapshot_ids: []
+expected:
+  phase: triage
+  blocker_type: missing_impact
+  acceptable_moves: ["ask_impact"]
+  acceptable_targets: []
+  acceptable_commands: []
+  minimum_required_claims: ["current affected customer count"]
+  forbidden_question_intents: []
+  forbidden_entities: ["Atlassian"]
+  forbidden_historical_facts: []
+

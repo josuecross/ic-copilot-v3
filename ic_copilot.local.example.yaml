@@ -1,0 +1,27 @@
+llm:
+  provider: openai
+  model: gpt-4.1-mini
+  api_key_env: OPENAI_API_KEY
+  base_url: null
+  timeout_seconds: 30.0
+  temperature: 0.0
+  redact_payload: true
+runtime:
+  require_verifier_pass: true
+  fail_closed: true
+  command_execution_enabled: false
+  slack_posting_enabled: false
+  paging_enabled: false
+product_knowledge_path: local_knowledge
+paths:
+  catalog: data/contract/service_catalog.yaml
+  command_registry: data/contract/command_registry.yaml
+  memory: data/contract/decision_moments.jsonl
+  reviewed_catalog_overlays:
+  - .ic_copilot/artifact_reviewed/catalog_overlays
+  - .ic_copilot/corrections/reviewed/catalog_overlays
+  reviewed_command_overlays:
+  - .ic_copilot/artifact_reviewed/command_overlays
+  - .ic_copilot/corrections/reviewed/command_overlays
+  reviewed_decision_moments:
+  - .ic_copilot/artifact_reviewed/decision_moments

@@ -1,0 +1,5 @@
+schema_version: "1.0"
+bundle_type: "generated_incident_knowledge"
+incident_slug: "owner_aligned_bundle"
+source: "deterministic-sample"
+created_at: "2026-05-25"

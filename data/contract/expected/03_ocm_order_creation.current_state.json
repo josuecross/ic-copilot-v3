@@ -1,0 +1,70 @@
+{
+  "schema_version": "0.1",
+  "incident_id": "INC-9003",
+  "phase": {
+    "primary": "investigation",
+    "confidence": 0.8,
+    "evidence_ids": []
+  },
+  "impact": {
+    "summary": "P3 order creation failures in NA2 sandbox; deployment correlation suspected.",
+    "affected_customers": [],
+    "affected_tenants": [],
+    "confidence": 0.7,
+    "evidence_ids": []
+  },
+  "candidate_services": [
+    {
+      "display_name": "OCM",
+      "canonical_name": "OCM",
+      "confidence": 0.8,
+      "source": "current_incident",
+      "evidence_ids": [
+        "m003"
+      ]
+    },
+    {
+      "display_name": "commerce-catalog",
+      "canonical_name": "commerce-catalog",
+      "confidence": 0.8,
+      "source": "current_incident",
+      "evidence_ids": [
+        "m004"
+      ]
+    }
+  ],
+  "engaged_entities": [
+    {
+      "entity_type": "team",
+      "display_name": "OCM",
+      "engagement_status": "actively_working",
+      "confidence": 0.8,
+      "evidence_ids": [
+        "m003"
+      ]
+    },
+    {
+      "entity_type": "team",
+      "display_name": "commerce-catalog",
+      "engagement_status": "responded",
+      "confidence": 0.8,
+      "evidence_ids": [
+        "m004"
+      ]
+    }
+  ],
+  "suggested_but_not_engaged": [],
+  "actions_completed": [],
+  "open_questions": [],
+  "answered_questions": [],
+  "stale_question_intents": [],
+  "current_blocker": {
+    "blocker_type": "missing_validation",
+    "summary": "missing validation",
+    "confidence": 0.8,
+    "evidence_ids": []
+  },
+  "monitoring_signals": [],
+  "rejected_entities": [],
+  "safety_flags": []
+}

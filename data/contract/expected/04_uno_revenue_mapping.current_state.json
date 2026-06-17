@@ -1,0 +1,97 @@
+{
+  "schema_version": "0.1",
+  "incident_id": "INC-9004",
+  "phase": {
+    "primary": "investigation",
+    "confidence": 0.8,
+    "evidence_ids": []
+  },
+  "impact": {
+    "summary": "Central Sandbox ZB-ZR data sync issue for tenant 10005051 / Google Fiber with RevenueOrgMapping=0.",
+    "affected_customers": [],
+    "affected_tenants": [],
+    "confidence": 0.7,
+    "evidence_ids": []
+  },
+  "candidate_services": [
+    {
+      "display_name": "Universal Sandbox",
+      "canonical_name": "Universal Sandbox",
+      "confidence": 0.8,
+      "source": "current_incident",
+      "evidence_ids": [
+        "m001"
+      ]
+    },
+    {
+      "display_name": "DUNE",
+      "canonical_name": "DUNE",
+      "confidence": 0.8,
+      "source": "current_incident",
+      "evidence_ids": [
+        "m003"
+      ]
+    },
+    {
+      "display_name": "UNO",
+      "canonical_name": "UNO",
+      "confidence": 0.8,
+      "source": "current_incident",
+      "evidence_ids": [
+        "m004"
+      ]
+    },
+    {
+      "display_name": "Revenue",
+      "canonical_name": "Revenue",
+      "confidence": 0.8,
+      "source": "current_incident",
+      "evidence_ids": [
+        "m005"
+      ]
+    }
+  ],
+  "engaged_entities": [
+    {
+      "entity_type": "team",
+      "display_name": "DUNE",
+      "engagement_status": "responded",
+      "confidence": 0.8,
+      "evidence_ids": [
+        "m003"
+      ]
+    },
+    {
+      "entity_type": "team",
+      "display_name": "UNO",
+      "engagement_status": "responded",
+      "confidence": 0.8,
+      "evidence_ids": [
+        "m004"
+      ]
+    },
+    {
+      "entity_type": "team",
+      "display_name": "Revenue",
+      "engagement_status": "responded",
+      "confidence": 0.8,
+      "evidence_ids": [
+        "m005"
+      ]
+    }
+  ],
+  "suggested_but_not_engaged": [],
+  "actions_completed": [],
+  "open_questions": [],
+  "answered_questions": [],
+  "stale_question_intents": [],
+  "current_blocker": {
+    "blocker_type": "missing_validation",
+    "summary": "missing validation",
+    "confidence": 0.8,
+    "evidence_ids": []
+  },
+  "monitoring_signals": [],
+  "rejected_entities": [],
+  "safety_flags": []
+}

@@ -1,0 +1,18 @@
+{
+  "passed": false,
+  "final_status": "blocked",
+  "blocked_claims": [
+    {
+      "text": "Atlassian",
+      "reason": "fake customer from URL domain"
+    },
+    {
+      "text": "9863631",
+      "reason": "fake tenant from URL path"
+    },
+    {
+      "text": "Default_Agent",
+      "reason": "unsupported team/service"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+commands:
+  - command_id: zsrebot_oncall
+    command_type: oncall_lookup
+    pattern: "^@zsrebot\\s+oncall\\s+(.+)$"
+    requires_human_approval: true
+    requires_catalog_target: true
+    danger_level: read_only_lookup
+
+  - command_id: dashboard_open
+    command_type: dashboard_open
+    pattern: "^open_dashboard:(.+)$"
+    requires_human_approval: true
+    requires_catalog_target: false
+    danger_level: read_only
+
+  - command_id: runbook_open
+    command_type: runbook_open
+    pattern: "^open_runbook:(.+)$"
+    requires_human_approval: true
+    requires_catalog_target: false
+    danger_level: read_only

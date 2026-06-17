@@ -1,0 +1,20 @@
+decision_id: dm_negative_historical_fact_leakage
+source_incident_id: historical-uno-google-fiber
+review_status: approved
+quality_score: 0.91
+phase_before: triage
+phase_after: investigation
+move: engage_owner
+situation_before: A historical Central Sandbox incident involved tenant 10005051 and Google Fiber.
+trigger: A product owner needed to acknowledge a routed incident.
+ic_action: Ask the currently suggested owner to acknowledge and name the next validation step.
+why_it_worked: The pattern was owner engagement, not copying historical tenant or customer details.
+applicability:
+  current_blocker: missing_owner
+  target_must_not_be_engaged: true
+  required_current_evidence: ["RevPro Support"]
+forbidden_fact_leakage: ["10005051", "Google Fiber", "Central Sandbox"]
+outcome: This record exists to prevent historical fact leakage.
+labels: ["missing_owner", "engage_owner", "negative_leakage", "revpro support"]
+reviewed_by: staff-sre
+

@@ -1,0 +1,15 @@
+{
+  "move": "request_status_or_eta",
+  "phase": "investigation",
+  "say_this": "PSG is engaged and the blocker appears to be code-fix/hotfix status.",
+  "next_line": "Trisha, can you confirm the current fix status, hotfix ETA, and whether Guo Qing has any release blockers?",
+  "command_suggestion": null,
+  "target_team": "PSG",
+  "why": "The state already has impact and owner engagement; the next IC move is ETA/release status, not generic impact clarification.",
+  "confidence": 0.83,
+  "evidence_ids": [
+    "m003",
+    "m004",
+    "m005"
+  ]
+}

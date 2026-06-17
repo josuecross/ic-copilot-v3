@@ -1,0 +1,251 @@
+services:
+  - service_id: revpro
+    canonical_name: RevPro
+    aliases: ["revpro", "RevPro deployment", "RevPro version"]
+    kind: service
+    status: active
+    criticality: high
+    ownership:
+      owning_team: RevPro Support
+      support_team: RevPro Support
+    slack:
+      channel: "#revpro-support"
+    oncall: {}
+    runbooks: ["https://runbooks.example.invalid/revpro"]
+    dashboards: ["https://dashboards.example.invalid/revpro"]
+    known_commands: []
+    dependencies: []
+    environments: ["prod", "sandbox"]
+    known_signals: ["deployment version mismatch", "invoice generation errors"]
+    unsafe_assumptions: ["Do not infer customer from RevPro URL paths."]
+
+  - service_id: revpro-support
+    canonical_name: RevPro Support
+    aliases: ["revpro support", "RevPro support", "RevPro Support team", "RevPro oncall"]
+    kind: team
+    status: active
+    criticality: high
+    ownership:
+      owning_team: RevPro Support
+    slack:
+      channel: "#revpro-support"
+    oncall:
+      lookup_command: "@zsrebot oncall RevPro support"
+    runbooks: ["https://runbooks.example.invalid/revpro-support"]
+    dashboards: ["https://dashboards.example.invalid/revpro-support"]
+    known_commands:
+      - type: oncall
+        command: "@zsrebot oncall RevPro support"
+        requires_human_approval: true
+        allowed_prefixes: ["@zsrebot oncall"]
+    dependencies: ["revpro"]
+    environments: ["prod", "sandbox"]
+    known_signals: ["deployment version mismatch"]
+    unsafe_assumptions: ["Do not page automatically."]
+
+  - service_id: uno
+    canonical_name: UNO
+    aliases: ["UNO", "ZB-ZR", "ZB/ZR", "UNO data-flow"]
+    kind: service
+    status: active
+    criticality: high
+    ownership:
+      owning_team: Revenue
+    slack:
+      channel: "#uno-incidents"
+    oncall:
+      lookup_command: "@zsrebot oncall UNO"
+    runbooks: ["https://runbooks.example.invalid/uno"]
+    dashboards: ["https://dashboards.example.invalid/uno"]
+    known_commands:
+      - type: oncall
+        command: "@zsrebot oncall UNO"
+        requires_human_approval: true
+        allowed_prefixes: ["@zsrebot oncall"]
+    dependencies: ["revenue", "dune"]
+    environments: ["central sandbox", "prod"]
+    known_signals: ["RevenueOrgMapping=0"]
+    unsafe_assumptions: ["Do not infer tenant IDs from docs URLs."]
+
+  - service_id: revenue
+    canonical_name: Revenue
+    aliases: ["Revenue team", "Revenue"]
+    kind: team
+    status: active
+    criticality: high
+    ownership:
+      owning_team: Revenue
+    slack:
+      channel: "#revenue-eng"
+    oncall: {}
+    runbooks: ["https://runbooks.example.invalid/revenue"]
+    dashboards: ["https://dashboards.example.invalid/revenue"]
+    known_commands: []
+    dependencies: []
+    environments: ["prod", "sandbox"]
+    known_signals: ["RevenueOrgMapping changes"]
+    unsafe_assumptions: []
+
+  - service_id: dune
+    canonical_name: DUNE
+    aliases: ["DUNE", "Dune team"]
+    kind: team
+    status: active
+    criticality: medium
+    ownership:
+      owning_team: DUNE
+    slack:
+      channel: "#dune-support"
+    oncall:
+      lookup_command: "@zsrebot oncall DUNE"
+    runbooks: ["https://runbooks.example.invalid/dune"]
+    dashboards: ["https://dashboards.example.invalid/dune"]
+    known_commands:
+      - type: oncall
+        command: "@zsrebot oncall DUNE"
+        requires_human_approval: true
+        allowed_prefixes: ["@zsrebot oncall"]
+    dependencies: []
+    environments: ["central sandbox"]
+    known_signals: ["mapping table validation"]
+    unsafe_assumptions: []
+
+  - service_id: universal-sandbox
+    canonical_name: Universal Sandbox
+    aliases: ["Universal Sandbox", "Central Sandbox", "CSBX", "sandbox"]
+    kind: service
+    status: active
+    criticality: medium
+    ownership:
+      owning_team: Sandbox Platform
+    slack:
+      channel: "#sandbox-platform"
+    oncall:
+      lookup_command: "@zsrebot oncall Universal Sandbox"
+    runbooks: ["https://runbooks.example.invalid/universal-sandbox"]
+    dashboards: ["https://dashboards.example.invalid/universal-sandbox"]
+    known_commands:
+      - type: oncall
+        command: "@zsrebot oncall Universal Sandbox"
+        requires_human_approval: true
+        allowed_prefixes: ["@zsrebot oncall"]
+    dependencies: ["uno"]
+    environments: ["central sandbox"]
+    known_signals: ["tenant sandbox data flow"]
+    unsafe_assumptions: []
+
+  - service_id: psg
+    canonical_name: PSG
+    aliases: ["PSG", "PSG team"]
+    kind: team
+    status: active
+    criticality: high
+    ownership:
+      owning_team: PSG
+    slack:
+      channel: "#psg-support"
+    oncall:
+      lookup_command: "@zsrebot oncall PSG"
+    runbooks: ["https://runbooks.example.invalid/psg"]
+    dashboards: ["https://dashboards.example.invalid/psg"]
+    known_commands:
+      - type: oncall
+        command: "@zsrebot oncall PSG"
+        requires_human_approval: true
+        allowed_prefixes: ["@zsrebot oncall"]
+    dependencies: ["stripe-payment"]
+    environments: ["prod"]
+    known_signals: ["hotfix release status"]
+    unsafe_assumptions: []
+
+  - service_id: stripe-payment
+    canonical_name: Stripe/payment integration
+    aliases: ["Stripe", "payment integration", "Bank Transfer", "Stripe integration"]
+    kind: service
+    status: active
+    criticality: high
+    ownership:
+      owning_team: PSG
+    slack:
+      channel: "#payments-incidents"
+    oncall:
+      lookup_command: "@zsrebot oncall PSG"
+    runbooks: ["https://runbooks.example.invalid/stripe-payment"]
+    dashboards: ["https://dashboards.example.invalid/stripe-payment"]
+    known_commands:
+      - type: oncall
+        command: "@zsrebot oncall PSG"
+        requires_human_approval: true
+        allowed_prefixes: ["@zsrebot oncall"]
+    dependencies: ["psg"]
+    environments: ["prod"]
+    known_signals: ["Bank Transfer failures"]
+    unsafe_assumptions: []
+
+  - service_id: ocm
+    canonical_name: OCM
+    aliases: ["OCM", "order creation manager", "order creation"]
+    kind: service
+    status: active
+    criticality: high
+    ownership:
+      owning_team: OCM
+    slack:
+      channel: "#ocm-support"
+    oncall:
+      lookup_command: "@zsrebot oncall OCM"
+    runbooks: ["https://runbooks.example.invalid/ocm"]
+    dashboards: ["https://dashboards.example.invalid/ocm"]
+    known_commands:
+      - type: oncall
+        command: "@zsrebot oncall OCM"
+        requires_human_approval: true
+        allowed_prefixes: ["@zsrebot oncall"]
+    dependencies: ["commerce-catalog"]
+    environments: ["NA2", "CSBX", "sandbox"]
+    known_signals: ["order creation failure", "deployment relationship"]
+    unsafe_assumptions: []
+
+  - service_id: commerce-catalog
+    canonical_name: commerce-catalog
+    aliases: ["commerce-catalog", "commerce catalog"]
+    kind: service
+    status: active
+    criticality: high
+    ownership:
+      owning_team: Commerce Catalog
+    slack:
+      channel: "#commerce-catalog"
+    oncall:
+      lookup_command: "@zsrebot oncall commerce-catalog"
+    runbooks: ["https://runbooks.example.invalid/commerce-catalog"]
+    dashboards: ["https://dashboards.example.invalid/commerce-catalog"]
+    known_commands:
+      - type: oncall
+        command: "@zsrebot oncall commerce-catalog"
+        requires_human_approval: true
+        allowed_prefixes: ["@zsrebot oncall"]
+    dependencies: []
+    environments: ["NA2", "CSBX", "sandbox"]
+    known_signals: ["catalog deployment"]
+    unsafe_assumptions: []
+
+  - service_id: support
+    canonical_name: Support
+    aliases: ["Support", "Zuora Support", "support team"]
+    kind: team
+    status: active
+    criticality: medium
+    ownership:
+      owning_team: Support
+    slack:
+      channel: "#support"
+    oncall: {}
+    runbooks: ["https://runbooks.example.invalid/support"]
+    dashboards: ["https://dashboards.example.invalid/support"]
+    known_commands: []
+    dependencies: []
+    environments: ["prod", "sandbox"]
+    known_signals: ["customer escalation"]
+    unsafe_assumptions: ["Support signal is not proof the product owner is engaged."]
+

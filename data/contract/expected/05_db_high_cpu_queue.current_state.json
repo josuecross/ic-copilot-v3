@@ -1,0 +1,87 @@
+{
+  "schema_version": "0.1",
+  "incident_id": "INC-9005",
+  "phase": {
+    "primary": "investigation",
+    "confidence": 0.8,
+    "evidence_ids": []
+  },
+  "impact": {
+    "summary": "DB CPU Busy Percent above 90% on dbs36p1 in PROD NA2; queue pending messages high.",
+    "affected_customers": [],
+    "affected_tenants": [],
+    "confidence": 0.7,
+    "evidence_ids": []
+  },
+  "candidate_services": [
+    {
+      "display_name": "DBA",
+      "canonical_name": "DBA",
+      "confidence": 0.8,
+      "source": "current_incident",
+      "evidence_ids": [
+        "m002"
+      ]
+    },
+    {
+      "display_name": "ActiveMQ",
+      "canonical_name": "ActiveMQ",
+      "confidence": 0.8,
+      "source": "current_incident",
+      "evidence_ids": [
+        "m004"
+      ]
+    }
+  ],
+  "engaged_entities": [
+    {
+      "entity_type": "team",
+      "display_name": "DBA",
+      "engagement_status": "actively_working",
+      "confidence": 0.8,
+      "evidence_ids": [
+        "m003"
+      ]
+    },
+    {
+      "entity_type": "team",
+      "display_name": "Platform Messaging",
+      "engagement_status": "responded",
+      "confidence": 0.8,
+      "evidence_ids": [
+        "m004"
+      ]
+    }
+  ],
+  "suggested_but_not_engaged": [],
+  "actions_completed": [
+    {
+      "action_type": "command_run",
+      "command_text": "@zsrebot oncall dba",
+      "status": "done",
+      "evidence_ids": [
+        "m002"
+      ]
+    },
+    {
+      "action_type": "queue_isolation_attempted",
+      "target": "SubscriptionOrderProcessed",
+      "status": "done",
+      "evidence_ids": [
+        "m006"
+      ]
+    }
+  ],
+  "open_questions": [],
+  "answered_questions": [],
+  "stale_question_intents": [],
+  "current_blocker": {
+    "blocker_type": "missing_validation",
+    "summary": "missing validation",
+    "confidence": 0.8,
+    "evidence_ids": []
+  },
+  "monitoring_signals": [],
+  "rejected_entities": [],
+  "safety_flags": []
+}

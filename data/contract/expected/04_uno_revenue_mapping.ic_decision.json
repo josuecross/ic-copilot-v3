@@ -1,0 +1,15 @@
+{
+  "move": "ask_next_validation",
+  "phase": "investigation",
+  "say_this": "UNO and Revenue are engaged; the current blocker is validating whether the Revenue mapping state is expected.",
+  "next_line": "UNO/Revenue, can you confirm whether RevenueOrgMapping=0 for tenant 10005051 is expected here and what safe validation or stop-the-bleeding step applies?",
+  "command_suggestion": null,
+  "target_team": "UNO/Revenue",
+  "why": "Current evidence includes tenant/mapping details and both teams are engaged, so this is a validation move.",
+  "confidence": 0.82,
+  "evidence_ids": [
+    "m002",
+    "m004",
+    "m005"
+  ]
+}

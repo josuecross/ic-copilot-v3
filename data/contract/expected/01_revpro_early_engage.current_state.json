@@ -1,0 +1,72 @@
+{
+  "schema_version": "0.1",
+  "incident_id": "INC-9001",
+  "phase": {
+    "primary": "engagement",
+    "confidence": 0.8,
+    "evidence_ids": []
+  },
+  "impact": {
+    "summary": "P3 RevPro deployment/version mismatch affecting 27 customers in PROD NA2.",
+    "affected_customers": [],
+    "affected_tenants": [],
+    "confidence": 0.7,
+    "evidence_ids": []
+  },
+  "candidate_services": [
+    {
+      "display_name": "RevPro",
+      "canonical_name": "RevPro",
+      "confidence": 0.8,
+      "source": "current_incident",
+      "evidence_ids": [
+        "m001"
+      ]
+    }
+  ],
+  "engaged_entities": [
+    {
+      "entity_type": "team",
+      "display_name": "Support",
+      "engagement_status": "responded",
+      "confidence": 0.8,
+      "evidence_ids": [
+        "m002"
+      ]
+    }
+  ],
+  "suggested_but_not_engaged": [
+    {
+      "entity_type": "team",
+      "display_name": "RevPro Support",
+      "reason": "Support suggested RevPro Support should check deployment/version mismatch; no visible acknowledgement from RevPro Support.",
+      "confidence": 0.8,
+      "evidence_ids": [
+        "m004"
+      ]
+    }
+  ],
+  "actions_completed": [],
+  "open_questions": [],
+  "answered_questions": [],
+  "stale_question_intents": [
+    {
+      "normalized_intent": "ask whether RevPro Support is already engaged",
+      "stale_reason": "state_already_knows",
+      "answer_or_state": "RevPro Support is suggested but not observed engaged",
+      "evidence_ids": [
+        "m004",
+        "m006"
+      ]
+    }
+  ],
+  "current_blocker": {
+    "blocker_type": "missing_owner",
+    "summary": "missing owner",
+    "confidence": 0.8,
+    "evidence_ids": []
+  },
+  "monitoring_signals": [],
+  "rejected_entities": [],
+  "safety_flags": []
+}

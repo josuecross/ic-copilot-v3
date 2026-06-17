@@ -1,0 +1,81 @@
+{
+  "schema_version": "0.1",
+  "incident_id": "INC-9006",
+  "phase": {
+    "primary": "triage",
+    "confidence": 0.8,
+    "evidence_ids": []
+  },
+  "impact": {
+    "summary": "No confirmed customer name or tenant ID yet.",
+    "affected_customers": [],
+    "affected_tenants": [],
+    "confidence": 0.7,
+    "evidence_ids": []
+  },
+  "candidate_services": [],
+  "engaged_entities": [],
+  "suggested_but_not_engaged": [],
+  "actions_completed": [],
+  "open_questions": [],
+  "answered_questions": [],
+  "stale_question_intents": [],
+  "current_blocker": {
+    "blocker_type": "missing_impact",
+    "summary": "missing impact",
+    "confidence": 0.8,
+    "evidence_ids": []
+  },
+  "monitoring_signals": [],
+  "rejected_entities": [
+    {
+      "text": "Atlassian",
+      "rejected_entity_type": "customer",
+      "reason": "url_domain",
+      "evidence_ids": [
+        "m002"
+      ]
+    },
+    {
+      "text": "9863631",
+      "rejected_entity_type": "tenant",
+      "reason": "url_path_number",
+      "evidence_ids": [
+        "m002"
+      ]
+    },
+    {
+      "text": "@zsrebot created this channel",
+      "rejected_entity_type": "command",
+      "reason": "bot_system_message",
+      "evidence_ids": [
+        "m003"
+      ]
+    },
+    {
+      "text": "Gaurav Could",
+      "rejected_entity_type": "person",
+      "reason": "display_name_fragment",
+      "evidence_ids": [
+        "m004"
+      ]
+    },
+    {
+      "text": "Gaurav Trisha",
+      "rejected_entity_type": "person",
+      "reason": "display_name_fragment",
+      "evidence_ids": [
+        "m005"
+      ]
+    },
+    {
+      "text": "Default_Agent",
+      "rejected_entity_type": "team",
+      "reason": "not_supported_by_evidence",
+      "evidence_ids": [
+        "m006"
+      ]
+    }
+  ],
+  "safety_flags": []
+}

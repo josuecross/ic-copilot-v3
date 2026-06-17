@@ -1,0 +1,5 @@
+status: "approved"
+approved: true
+reviewed_by: "sample-reviewer"
+reviewed_at: "2026-05-25"
+review_method: "Deterministic owner-alignment sample for intake validation."

@@ -1,0 +1,15 @@
+{
+  "move": "engage_owner",
+  "phase": "engagement",
+  "say_this": "I do not see RevPro Support acknowledgement yet.",
+  "next_line": "RevPro Support, can you confirm ownership and the next validation step for this RevPro impact?",
+  "command_suggestion": "@zsrebot oncall RevPro support",
+  "target_team": "RevPro Support",
+  "why": "Do not ask whether RevPro Support is looped in; the state already says they are not observed engaged.",
+  "confidence": 0.86,
+  "evidence_ids": [
+    "m001",
+    "m002",
+    "m003"
+  ]
+}

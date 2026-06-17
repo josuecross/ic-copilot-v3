@@ -1,0 +1,15 @@
+{
+  "move": "ask_next_validation",
+  "phase": "investigation",
+  "say_this": "OCM and commerce-catalog are already engaged; the next blocker is deployment correlation/validation.",
+  "next_line": "Praneeth, can you confirm whether today's NA2 CSBX deployment is related and what signal proves order creation is recovering?",
+  "command_suggestion": null,
+  "target_team": "OCM",
+  "why": "Owner is already present, so do not reroute; ask the engaged owner for validation.",
+  "confidence": 0.8,
+  "evidence_ids": [
+    "m003",
+    "m004",
+    "m005"
+  ]
+}

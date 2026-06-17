@@ -1,0 +1,20 @@
+case_id: fake_docs_tenant
+incident_id: fake_docs_tenant
+title: Docs URL number must not become tenant
+visible_events:
+  - "09:00 IC: Notes are in https://docs.example.invalid/document/d/9863631/edit"
+  - "09:01 Support: Account or tenant impact is not confirmed yet."
+hidden_future_event_ids: []
+service_catalog_snapshot_ids: []
+memory_snapshot_ids: []
+expected:
+  phase: triage
+  blocker_type: missing_impact
+  acceptable_moves: ["ask_impact"]
+  acceptable_targets: []
+  acceptable_commands: []
+  minimum_required_claims: ["tenant/account if known"]
+  forbidden_question_intents: []
+  forbidden_entities: ["9863631"]
+  forbidden_historical_facts: []
+

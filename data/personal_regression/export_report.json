@@ -1,0 +1,68 @@
+{
+  "corpus_root": ".ic_copilot/personal_corpus",
+  "output_root": "data/personal_regression",
+  "exported_cases": [],
+  "skipped_cases": [
+    {
+      "case_id": "IN-10978",
+      "reason": "not reviewed_for_personal_regression"
+    },
+    {
+      "case_id": "IN-10983",
+      "reason": "not reviewed_for_personal_regression"
+    },
+    {
+      "case_id": "IN-10984",
+      "reason": "not reviewed_for_personal_regression"
+    },
+    {
+      "case_id": "IN-10990",
+      "reason": "not reviewed_for_personal_regression"
+    },
+    {
+      "case_id": "IN-11032_fragment",
+      "reason": "not reviewed_for_personal_regression"
+    },
+    {
+      "case_id": "IN-11041",
+      "reason": "not reviewed_for_personal_regression"
+    },
+    {
+      "case_id": "IN-11057",
+      "reason": "not reviewed_for_personal_regression"
+    },
+    {
+      "case_id": "run-7d98adda5331",
+      "reason": "not reviewed_for_personal_regression"
+    },
+    {
+      "case_id": "unknown_daco_long_running_queries",
+      "reason": "not reviewed_for_personal_regression"
+    },
+    {
+      "case_id": "unknown_ebs_volume_increase",
+      "reason": "not reviewed_for_personal_regression"
+    },
+    {
+      "case_id": "unknown_revpro_edition_update",
+      "reason": "not reviewed_for_personal_regression"
+    },
+    {
+      "case_id": "unknown_slack_ecm_approval",
+      "reason": "not reviewed_for_personal_regression"
+    },
+    {
+      "case_id": "unknown_zdp_latency_sbx01",
+      "reason": "not reviewed_for_personal_regression"
+    }
+  ],
+  "written_files": [
+    "data/personal_regression/replay_cases.jsonl",
+    "data/personal_regression/verifier_cases.jsonl",
+    "data/personal_regression/rejected_entities.jsonl",
+    "data/personal_regression/decision_moments.review_required.jsonl",
+    "data/personal_regression/catalog_candidates.review_required.yaml",
+    "data/personal_regression/command_candidates.review_required.yaml",
+    "data/personal_regression/GENERATED_FROM.md"
+  ]
+}

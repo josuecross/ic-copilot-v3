@@ -1,0 +1,71 @@
+{
+  "schema_version": "0.1",
+  "incident_id": "INC-9002",
+  "phase": {
+    "primary": "investigation",
+    "confidence": 0.8,
+    "evidence_ids": []
+  },
+  "impact": {
+    "summary": "P2 bank transfer failures with estimated business impact around £1M.",
+    "affected_customers": [],
+    "affected_tenants": [],
+    "confidence": 0.7,
+    "evidence_ids": []
+  },
+  "candidate_services": [
+    {
+      "display_name": "PSG",
+      "canonical_name": "PSG",
+      "confidence": 0.8,
+      "source": "current_incident",
+      "evidence_ids": [
+        "m003"
+      ]
+    },
+    {
+      "display_name": "Stripe Integration",
+      "canonical_name": "Stripe Integration",
+      "confidence": 0.8,
+      "source": "current_incident",
+      "evidence_ids": [
+        "m003"
+      ]
+    }
+  ],
+  "engaged_entities": [
+    {
+      "entity_type": "team",
+      "display_name": "PSG",
+      "engagement_status": "actively_working",
+      "confidence": 0.8,
+      "evidence_ids": [
+        "m003"
+      ]
+    }
+  ],
+  "suggested_but_not_engaged": [],
+  "actions_completed": [
+    {
+      "action_type": "code_fix_identified",
+      "actor": "Trisha PSG",
+      "target": "PSG-1843",
+      "status": "in_progress",
+      "evidence_ids": [
+        "m003"
+      ]
+    }
+  ],
+  "open_questions": [],
+  "answered_questions": [],
+  "stale_question_intents": [],
+  "current_blocker": {
+    "blocker_type": "waiting_on_code_fix",
+    "summary": "waiting on code fix",
+    "confidence": 0.8,
+    "evidence_ids": []
+  },
+  "monitoring_signals": [],
+  "rejected_entities": [],
+  "safety_flags": []
+}

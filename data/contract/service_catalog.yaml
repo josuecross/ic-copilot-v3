@@ -1,0 +1,158 @@
+services:
+  - service_id: support
+    canonical_name: Support
+    aliases: ["support", "global support", "customer support"]
+    owning_team: Support
+    support_team: Support
+    slack_targets: ["Support"]
+    oncall_lookup_command: null
+    known_signals: []
+    dashboards: []
+    runbooks: []
+
+  - service_id: revpro
+    canonical_name: RevPro
+    aliases: ["revpro", "revenue pro", "revpro support", "revpro deployment", "revenue recognition"]
+    owning_team: RevPro Support
+    support_team: RevPro Support
+    slack_targets: ["RevPro Support"]
+    oncall_lookup_command: "@zsrebot oncall RevPro support"
+    known_signals: ["RevPro deployment/version consistency", "RevPro application error rate"]
+    dashboards:
+      - title: "RevPro service health"
+        url: "https://telemetry.example.local/d/revpro-health"
+    runbooks:
+      - title: "RevPro incident triage"
+        url: "https://runbooks.example.local/revpro"
+
+  - service_id: uno
+    canonical_name: UNO
+    aliases: ["uno", "unified object", "uno data flow"]
+    owning_team: UNO
+    support_team: UNO
+    slack_targets: ["UNO"]
+    oncall_lookup_command: "@zsrebot oncall UNO"
+    known_signals: ["UNO event throughput", "UNO Kafka lag"]
+    dashboards:
+      - title: "UNO data flow"
+        url: "https://telemetry.example.local/d/uno-flow"
+    runbooks: []
+
+  - service_id: revenue
+    canonical_name: Revenue
+    aliases: ["revenue", "revenue service", "revenue mapping", "revenue org mapping"]
+    owning_team: Revenue
+    support_team: Revenue
+    slack_targets: ["Revenue"]
+    oncall_lookup_command: "@zsrebot oncall Revenue"
+    known_signals: ["Revenue mapping errors", "RevenueOrgMapping missing"]
+    dashboards:
+      - title: "Revenue mapping health"
+        url: "https://telemetry.example.local/d/revenue-mapping"
+    runbooks: []
+
+  - service_id: dune
+    canonical_name: DUNE
+    aliases: ["dune", "dune pipeline", "central sandbox data pipeline"]
+    owning_team: DUNE
+    support_team: DUNE
+    slack_targets: ["DUNE"]
+    oncall_lookup_command: "@zsrebot oncall DUNE"
+    known_signals: ["DUNE pipeline event volume"]
+    dashboards:
+      - title: "DUNE pipeline"
+        url: "https://telemetry.example.local/d/dune-pipeline"
+    runbooks: []
+
+  - service_id: universal_sandbox
+    canonical_name: Universal Sandbox
+    aliases: ["universal sandbox", "central sandbox", "csbx", "zb-zr"]
+    owning_team: Universal Sandbox
+    support_team: Universal Sandbox
+    slack_targets: ["Universal Sandbox"]
+    oncall_lookup_command: "@zsrebot oncall Universal Sandbox"
+    known_signals: ["Sandbox data sync lag", "ZB-ZR data flow"]
+    dashboards:
+      - title: "Universal Sandbox health"
+        url: "https://telemetry.example.local/d/universal-sandbox"
+    runbooks: []
+
+  - service_id: psg
+    canonical_name: PSG
+    aliases: ["psg", "payment service gateway", "payment gateway"]
+    owning_team: PSG
+    support_team: PSG
+    slack_targets: ["PSG"]
+    oncall_lookup_command: "@zsrebot oncall PSG"
+    known_signals: ["Payment error rate", "Stripe bank transfer failure rate"]
+    dashboards:
+      - title: "Payment service gateway"
+        url: "https://telemetry.example.local/d/psg"
+    runbooks: []
+
+  - service_id: stripe
+    canonical_name: Stripe Integration
+    aliases: ["stripe", "stripe integration", "bank transfer", "payment intent"]
+    owning_team: PSG
+    support_team: PSG
+    slack_targets: ["PSG"]
+    oncall_lookup_command: "@zsrebot oncall PSG"
+    known_signals: ["Stripe API failures", "Bank transfer status"]
+    dashboards:
+      - title: "Stripe integration"
+        url: "https://telemetry.example.local/d/stripe-integration"
+    runbooks: []
+
+  - service_id: ocm
+    canonical_name: OCM
+    aliases: ["ocm", "order creation", "order creation management"]
+    owning_team: OCM
+    support_team: OCM
+    slack_targets: ["OCM"]
+    oncall_lookup_command: "@zsrebot oncall OCM"
+    known_signals: ["Order creation failures", "Order API error rate"]
+    dashboards:
+      - title: "OCM order creation"
+        url: "https://telemetry.example.local/d/ocm-order-creation"
+    runbooks: []
+
+  - service_id: commerce_catalog
+    canonical_name: commerce-catalog
+    aliases: ["commerce-catalog", "commerce catalog", "catalog service"]
+    owning_team: commerce-catalog
+    support_team: commerce-catalog
+    slack_targets: ["commerce-catalog"]
+    oncall_lookup_command: "@zsrebot oncall commerce-catalog"
+    known_signals: ["Catalog lookup errors"]
+    dashboards:
+      - title: "Commerce catalog"
+        url: "https://telemetry.example.local/d/commerce-catalog"
+    runbooks: []
+
+  - service_id: dba
+    canonical_name: DBA
+    aliases: ["dba", "database", "mysql", "db", "rds"]
+    owning_team: DBA
+    support_team: DBA
+    slack_targets: ["DBA"]
+    oncall_lookup_command: "@zsrebot oncall dba"
+    known_signals: ["CPU Busy Percent", "MySQL replication lag", "ActiveMQ pending messages"]
+    dashboards:
+      - title: "DB host metrics"
+        url: "https://telemetry.example.local/d/db-host"
+    runbooks:
+      - title: "DB high CPU triage"
+        url: "https://runbooks.example.local/db-high-cpu"
+
+  - service_id: activemq
+    canonical_name: ActiveMQ
+    aliases: ["activemq", "queue", "pending messages", "SubscriptionOrderProcessed"]
+    owning_team: Platform Messaging
+    support_team: Platform Messaging
+    slack_targets: ["Platform Messaging"]
+    oncall_lookup_command: "@zsrebot oncall Platform Messaging"
+    known_signals: ["Pending messages", "Consumer lag"]
+    dashboards:
+      - title: "ActiveMQ queues"
+        url: "https://telemetry.example.local/d/activemq"
+    runbooks: []

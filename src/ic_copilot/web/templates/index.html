@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>IC Copilot</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <h1>IC Copilot</h1>
+        <p>Local manual-copy incident whisper</p>
+      </div>
+      <div class="status-badges" aria-label="Product readiness">
+        <span id="ai-badge" class="badge badge-warn">AI setup needed</span>
+        <span id="knowledge-badge" class="badge badge-warn">Knowledge missing</span>
+        <span id="verifier-badge" class="badge badge-good">Safety verifier on</span>
+      </div>
+    </header>
+
+    <main class="layout">
+      <section class="panel input-panel">
+        <h2>Paste Slack Incident</h2>
+        <label for="incident-text">Slack paste</label>
+        <textarea id="incident-text" rows="12" placeholder="Paste the visible incident thread here"></textarea>
+
+        <div class="row">
+          <label for="sample-select">Sample</label>
+          <select id="sample-select">
+            <option value="">No sample selected</option>
+          </select>
+        </div>
+
+        <div class="row">
+          <label for="file-input">Upload .txt or .jsonl</label>
+          <input id="file-input" type="file" accept=".txt,.jsonl,text/plain,application/jsonl" />
+        </div>
+
+        <div class="toggles">
+          <label><input id="save-trace" type="checkbox" checked /> Save local trace</label>
+        </div>
+
+        <button id="run-button" type="button">Run</button>
+        <p id="run-message" class="message"></p>
+      </section>
+
+      <section class="panel output-panel">
+        <h2>IC Whisper Output</h2>
+        <div class="output-grid">
+          <section>
+            <h3>SAY THIS</h3>
+            <pre id="say-this"></pre>
+          </section>
+          <section>
+            <h3>NEXT LINE</h3>
+            <pre id="next-line"></pre>
+          </section>
+          <section>
+            <h3>COMMAND</h3>
+            <pre id="command-output"></pre>
+            <p class="warning">Suggestion only · manual copy only · not executed.</p>
+          </section>
+        </div>
+        <button id="copy-output" type="button" disabled>Copy full output</button>
+        <button id="copy-error" type="button" disabled hidden>Copy error summary</button>
+      </section>
+
+      <section class="panel progress-panel">
+        <details id="progress-details">
+          <summary>Pipeline Progress</summary>
+          <p id="total-runtime" class="message">No run yet.</p>
+          <ol id="progress-list" class="progress-list"></ol>
+        </details>
+      </section>
+
+      <section class="panel why-panel">
+        <details id="why-details">
+          <summary>Do Not Ask / Why</summary>
+          <div class="why-grid">
+            <div>
+              <h3>Do Not Ask</h3>
+              <ul id="do-not-ask"></ul>
+            </div>
+            <div>
+              <h3>Why</h3>
+              <dl id="why-list"></dl>
+            </div>
+          </div>
+        </details>
+      </section>
+
+      <section class="panel feedback-panel">
+        <h2>Feedback</h2>
+        <fieldset>
+          <legend>Usefulness</legend>
+          <label><input type="radio" name="usefulness" value="useful_as_is" /> useful</label>
+          <label><input type="radio" name="usefulness" value="safe_but_generic" checked /> safe but generic</label>
+          <label><input type="radio" name="usefulness" value="wrong" /> wrong</label>
+          <label><input type="radio" name="usefulness" value="unsafe" /> unsafe</label>
+        </fieldset>
+        <fieldset class="tags">
+          <legend>Tags</legend>
+          <label><input type="checkbox" value="too_generic" /> too generic</label>
+          <label><input type="checkbox" value="wrong_owner" /> wrong owner</label>
+          <label><input type="checkbox" value="wrong_phase" /> wrong phase</label>
+          <label><input type="checkbox" value="missed_blocker" /> missed blocker</label>
+          <label><input type="checkbox" value="stale_question" /> stale question</label>
+          <label><input type="checkbox" value="fake_entity" /> fake entity</label>
+          <label><input type="checkbox" value="historical_leakage" /> historical leakage</label>
+          <label><input type="checkbox" value="invalid_command" /> invalid command</label>
+          <label><input type="checkbox" value="unsupported_monitoring" /> unsupported monitoring</label>
+          <label><input type="checkbox" value="no_useful_output" /> no useful output</label>
+        </fieldset>
+        <label for="feedback-notes">Notes</label>
+        <textarea id="feedback-notes" rows="4"></textarea>
+        <button id="save-feedback" type="button">Save feedback</button>
+        <button id="export-feedback" type="button">Export feedback JSONL</button>
+        <p id="feedback-message" class="message"></p>
+      </section>
+
+      <section class="panel history-panel">
+        <details id="history-details">
+          <summary>Recent Runs</summary>
+          <div class="history-actions">
+            <button id="refresh-runs" type="button">Refresh</button>
+            <button id="delete-all-runs" type="button">Delete all local runs</button>
+          </div>
+          <ul id="recent-runs" class="run-list"></ul>
+        </details>
+      </section>
+
+      <section class="panel advanced-panel">
+        <details id="advanced-details">
+          <summary>Advanced Details</summary>
+
+          <section class="subpanel">
+            <h2>Product Runtime Status</h2>
+            <dl id="runtime-status"></dl>
+            <button id="check-provider" type="button">Check provider</button>
+            <p id="provider-check-message" class="message"></p>
+            <p class="warning" id="runtime-setup-warning"></p>
+          </section>
+
+          <section class="subpanel">
+            <h2>Product Knowledge Status</h2>
+            <dl id="knowledge-status"></dl>
+            <button id="validate-knowledge" type="button">Validate knowledge</button>
+            <p id="knowledge-message" class="message"></p>
+          </section>
+
+          <section class="subpanel">
+            <h2>Debug / Trace</h2>
+            <div class="tabs">
+              <button class="tab-button active" data-tab="debug-summary" type="button">Debug summary</button>
+              <button class="tab-button" data-tab="trace-json" type="button">Raw JSON trace</button>
+              <button class="tab-button" data-tab="normalized-events" type="button">Normalized events</button>
+              <button class="tab-button" data-tab="current-state" type="button">Current state</button>
+              <button class="tab-button" data-tab="verifier-result" type="button">Verifier</button>
+            </div>
+            <div id="diagnosis-cards" class="diagnosis-cards"></div>
+            <pre id="debug-summary" class="tab-content active"></pre>
+            <pre id="trace-json" class="tab-content"></pre>
+            <pre id="normalized-events" class="tab-content"></pre>
+            <pre id="current-state" class="tab-content"></pre>
+            <pre id="verifier-result" class="tab-content"></pre>
+            <button id="copy-debug-summary" type="button">Copy debug summary</button>
+            <button id="download-trace" type="button">Download trace JSON</button>
+            <button id="download-input" type="button">Download input</button>
+            <button id="delete-run" type="button">Delete local run</button>
+          </section>
+        </details>
+      </section>
+    </main>
+
+    <script src="/static/app.js"></script>
+  </body>
+</html>

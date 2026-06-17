@@ -1,0 +1,88 @@
+{
+  "schema_version": "0.1",
+  "incident_id": "INC-9008",
+  "phase": {
+    "primary": "monitoring",
+    "confidence": 0.8,
+    "evidence_ids": []
+  },
+  "impact": {
+    "summary": "OCM order creation failures; revert completed and early customer validation successful.",
+    "affected_customers": [],
+    "affected_tenants": [],
+    "confidence": 0.7,
+    "evidence_ids": []
+  },
+  "candidate_services": [
+    {
+      "display_name": "OCM",
+      "canonical_name": "OCM",
+      "confidence": 0.8,
+      "source": "current_incident",
+      "evidence_ids": [
+        "m002"
+      ]
+    },
+    {
+      "display_name": "commerce-catalog",
+      "canonical_name": "commerce-catalog",
+      "confidence": 0.8,
+      "source": "current_incident",
+      "evidence_ids": [
+        "m005"
+      ]
+    }
+  ],
+  "engaged_entities": [
+    {
+      "entity_type": "team",
+      "display_name": "OCM",
+      "engagement_status": "actively_working",
+      "confidence": 0.8,
+      "evidence_ids": [
+        "m002"
+      ]
+    }
+  ],
+  "suggested_but_not_engaged": [],
+  "actions_completed": [
+    {
+      "action_type": "mitigation_completed",
+      "actor": "OCM",
+      "target": "bad deployment flag reverted",
+      "status": "done",
+      "evidence_ids": [
+        "m002"
+      ]
+    }
+  ],
+  "open_questions": [],
+  "answered_questions": [],
+  "stale_question_intents": [],
+  "current_blocker": {
+    "blocker_type": "waiting_on_monitoring",
+    "summary": "waiting on monitoring",
+    "confidence": 0.8,
+    "evidence_ids": []
+  },
+  "monitoring_signals": [
+    {
+      "name": "order API error rate",
+      "signal_type": "error_rate",
+      "status": "being_monitored",
+      "evidence_ids": [
+        "m005"
+      ]
+    },
+    {
+      "name": "catalog lookup latency",
+      "signal_type": "latency",
+      "status": "being_monitored",
+      "evidence_ids": [
+        "m005"
+      ]
+    }
+  ],
+  "rejected_entities": [],
+  "safety_flags": []
+}

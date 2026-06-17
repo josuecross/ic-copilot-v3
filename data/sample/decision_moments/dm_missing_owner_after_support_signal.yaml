@@ -1,0 +1,21 @@
+decision_id: dm_missing_owner_after_support_signal
+source_incident_id: historical-revpro-owner
+review_status: approved
+quality_score: 0.92
+phase_before: triage
+phase_after: investigation
+move: engage_owner
+situation_before: Support pointed to a product owner team but the owner had not acknowledged.
+trigger: Current incident had impact and a suggested-but-not-engaged owner.
+ic_action: Ask the suggested owner to confirm ownership and next validation step.
+why_it_worked: It converted a passive routing hint into an explicit owner acknowledgement.
+applicability:
+  current_blocker: missing_owner
+  target: RevPro Support
+  target_must_not_be_engaged: true
+  required_current_evidence: ["RevPro Support"]
+forbidden_fact_leakage: []
+outcome: Owner acknowledged and validation continued.
+labels: ["missing_owner", "support_signal", "engage_owner", "revpro support"]
+reviewed_by: staff-sre
+

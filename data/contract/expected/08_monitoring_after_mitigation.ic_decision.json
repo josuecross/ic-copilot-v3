@@ -1,0 +1,15 @@
+{
+  "move": "request_monitoring_signal",
+  "phase": "monitoring",
+  "say_this": "Mitigation appears completed and early order creation validation is positive.",
+  "next_line": "Let's monitor order API error rate and catalog lookup latency for 30 minutes before moving to verification.",
+  "command_suggestion": null,
+  "target_team": "OCM",
+  "why": "Current evidence supports monitoring after revert and successful early validation.",
+  "confidence": 0.84,
+  "evidence_ids": [
+    "m002",
+    "m004",
+    "m005"
+  ]
+}

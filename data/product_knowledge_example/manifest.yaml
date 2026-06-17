@@ -1,0 +1,20 @@
+schema_version: "1.0"
+knowledge_status: "externally_reviewed"
+runtime_usable: true
+reviewed_by: "example-reviewer"
+reviewed_at: "2026-05-25"
+review_method: "Committed safe example derived from contract fixtures for local setup validation."
+files:
+  service_catalog: "service_catalog.yaml"
+  command_registry: "command_registry.yaml"
+  decision_moments: "decision_moments.jsonl"
+  verifier_regressions: "verifier_regressions.jsonl"
+  rejected_entities: "rejected_entities.jsonl"
+  stale_question_patterns: "stale_question_patterns.jsonl"
+safety_rules:
+  commands_manual_copy_only: true
+  no_command_execution: true
+  no_slack_posting: true
+  no_paging: true
+  no_remediation: true
+  historical_facts_require_current_evidence: true

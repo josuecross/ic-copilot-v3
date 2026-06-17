@@ -1,0 +1,15 @@
+{
+  "move": "engage_owner",
+  "phase": "engagement",
+  "say_this": "I do not see RevPro Support engaged yet, and Support appears to be pointing this toward RevPro.",
+  "next_line": "RevPro Support, can you confirm ownership and the next validation step for the RevPro deployment/version mismatch impact?",
+  "command_suggestion": "@zsrebot oncall RevPro support",
+  "target_team": "RevPro Support",
+  "why": "Current evidence points to RevPro Support as likely owner, but no visible acknowledgement is present.",
+  "confidence": 0.84,
+  "evidence_ids": [
+    "m001",
+    "m004",
+    "m006"
+  ]
+}

@@ -1,0 +1,19 @@
+decision_id: dm_code_fix_eta_blocker
+source_incident_id: historical-payment-hotfix
+review_status: human_reviewed
+quality_score: 0.88
+phase_before: mitigation
+phase_after: mitigation
+move: ask_code_fix_status
+situation_before: A code fix was identified but bridge participants did not have ETA or release blockers.
+trigger: Active code-fix owner plus release coordinator were visible.
+ic_action: Ask the code-fix owner for status, hotfix ETA, and release blockers.
+why_it_worked: It avoided root-cause debate and clarified the bridge's next timing decision.
+applicability:
+  current_blocker: waiting_on_code_fix
+  required_current_evidence: ["code fix"]
+forbidden_fact_leakage: ["PSG-9999", "Legacy BankCo"]
+outcome: Hotfix ETA and release blocker were clarified.
+labels: ["waiting_on_code_fix", "eta", "hotfix", "psg"]
+reviewed_by: staff-sre
+

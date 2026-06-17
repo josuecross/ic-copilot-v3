@@ -1,0 +1,15 @@
+{
+  "move": "ask_next_validation",
+  "phase": "investigation",
+  "say_this": "DBA is engaged and the dedicated queue action did not reduce CPU yet.",
+  "next_line": "Sai, can you identify which tenant/workload is still driving the bulk operation so we can check the API/workflow/batch-query path next?",
+  "command_suggestion": null,
+  "target_team": "DBA",
+  "why": "After queue isolation did not reduce CPU, the useful next IC move is to identify the remaining workload contributor.",
+  "confidence": 0.82,
+  "evidence_ids": [
+    "m003",
+    "m006",
+    "m007"
+  ]
+}
