@@ -1,56 +1,107 @@
-# IC Copilot
+# IC Copilot V3
 
-This is a local personal Incident Commander whisperer. Paste a Slack incident snippet, run the configured real LLM path, and copy one short verified response:
+**Human-in-the-loop AI decision support built with Python, FastAPI, structured outputs, deterministic verification, and regression evaluation.**
 
-Current runtime: simplified `IncidentReadAndWhisper` path following the Phase 1.36C safety work.
+IC Copilot V3 is a local-first application that turns noisy operational chat into one concise, evidence-grounded next-step recommendation. The project explores a practical engineering question: **how can an LLM be useful in a high-context workflow without giving it unrestricted authority or trusting its output blindly?**
 
-- `SAY THIS`
-- `NEXT LINE`
-- `COMMAND` only when a safe human-approved lookup is available
+The answer in this repository is a hybrid design: use the model for semantic interpretation, then apply deterministic software checks for structure, grounding, target validity, safety, and stale-context failures before anything is shown to the user.
 
-It is not a Slack app, team workflow tool, artifact review UI, calibration workbench, command runner, pager, or remediation system.
+> **Human control is a design requirement.** IC Copilot does not execute remediation, send Slack messages, page teams, or run arbitrary commands. The final output is guidance for manual review and use.
 
-## Product Path
+## Why this project matters
 
-Normal runs use one spine:
+Many AI applications stop at `prompt -> model -> text`. IC Copilot adds an engineering layer around the model call:
 
-Slack paste or upload -> light normalizer -> deterministic input-size assessment and latest-window context pack -> simple candidate target extraction -> one AI `IncidentReadAndWhisper` call -> deterministic safety verifier -> formatting/metadata-only repair if needed -> manual-copy whisper.
+- structured input processing and context selection;
+- deterministic extraction of valid people, teams, services, and safe command targets;
+- typed model outputs and schema validation;
+- evidence-grounding and stale-context checks;
+- explicit safety rules for generated commands and targets;
+- narrow repair that can fix formatting/metadata without silently changing the recommendation;
+- replay, regression, acceptance, and adversarial evaluation;
+- local persistence and diagnostics for inspecting application behavior.
 
-`IncidentReadAndWhisper` is the product's semantic read of the messy Slack paste. It captures the current read, latest open loop, already-answered questions, selected move, selected target ID, concise wording, uncertainty, and current-event evidence quotes.
+This makes the repository useful as a portfolio example of **applied AI, AI evaluation, backend engineering, developer tooling, and reliability-oriented software design**.
 
-Allowed targets are built deterministically before the AI writes advice. The planner must choose target IDs from Slack authors, explicit mentions, current-evidence teams/services, catalog services/teams, or safe command-registry targets. URL path numbers, Jira IDs, log fragments, table headers, bot placeholders, preview-card fields, policy IDs, and generated summary fragments are non-targetable.
+## Current runtime
 
-The verifier remains the final gate for schema validity, current-evidence grounding, target validity, command safety, URL-number/customer/tenant safety, historical leakage, fake entities, stale questions, output length, and no action execution.
+The normal product path is centered on a simplified `IncidentReadAndWhisper` workflow:
 
-Older compatibility objects such as `IncidentBrief`, typed semantic ledgers, `CleanIncidentContext`, `StateDelta`, `SharpBlockerAssessment`, blocker reselection, target scoring, and `SemanticIntentAssessment` may remain in legacy/debug modules or tests, but the normal product trace centers on `IncidentReadAndWhisper`. Regression fixtures such as rpcapd/Billing, API 504, Security Workflow, and RevPro are tests only, not keyword routing.
-
-Repair is deliberately narrow: it may normalize expiration metadata, trim length, remove duplicate `NEXT LINE`, or remove unsafe/unregistered command text. It must not choose a new blocker, target, semantic move, workstream, customer, tenant, service, or person.
-
-## Setup
-
-1. Create a virtualenv and install the project dependencies.
-2. Put your provider key in `.env` or your shell, usually `OPENAI_API_KEY`.
-3. Create or bootstrap `local_knowledge/`.
-4. Validate knowledge:
-
-```bash
-python -m ic_copilot.cli validate-knowledge local_knowledge
-python -m ic_copilot.cli knowledge-status local_knowledge
+```text
+Sanitized operational text
+        |
+        v
+Input normalization + size assessment
+        |
+        v
+Latest-window context selection
+        |
+        v
+Deterministic candidate/target extraction
+        |
+        v
+One semantic LLM call
+        |
+        v
+Deterministic verification
+        |
+        +---- blocked/unsafe ----> safe fallback
+        |
+        v
+Formatting / metadata-only repair
+        |
+        v
+Manual-copy recommendation
 ```
 
-`local_knowledge/` is ignored by git and is the only normal runtime knowledge source.
+The semantic layer interprets the current situation and proposes a next move. The deterministic layer decides whether that output is safe and sufficiently grounded to display.
 
-## Run
+## Reliability and safety design
+
+### Grounded output
+
+The verifier checks that recommendations are supported by the current evidence rather than invented from unrelated or historical context.
+
+### Deterministic target allowlisting
+
+Targets are derived before the model writes its recommendation. Slack authors, explicit mentions, current-evidence teams/services, catalog entries, and registered safe-command targets can become candidates; incidental IDs, log fragments, URL numbers, or generated summary text cannot.
+
+### Human-in-the-loop execution
+
+The system produces guidance only. Operational actions stay with the user.
+
+### Narrow repair
+
+Repairs are intentionally constrained to presentation and metadata issues such as duplicate lines, length, expiration metadata, or unsafe command text. Repair logic is not allowed to silently choose a different owner, service, blocker, customer, tenant, or semantic action.
+
+### Fail-safe behavior
+
+Provider failures, invalid output, unsupported targets, stale questions, and unsafe recommendations can be routed to a safe fallback instead of being presented as confident guidance.
+
+## Technology stack
+
+- **Python 3.11+**
+- **FastAPI** — local web interface and application routes
+- **Pydantic** — structured contracts and validation
+- **Typer** — CLI
+- **Uvicorn** — local ASGI runtime
+- **OpenAI API** — optional configured live semantic provider
+- **PyYAML** — catalogs and configuration
+- **SQLite** — local run/trace persistence
+- **pytest** — unit, integration, contract, regression, and safety tests
+- **Ruff** — static/lint checks
+
+## Interfaces
+
+### Local web application
 
 ```bash
 python scripts/run_local_web.py
 ```
 
-Open the localhost URL, paste a sanitized incident snippet, run the whisper, and label the output. The UI is intentionally small: readiness badges, paste/upload/sample, IC whisper, progress, Do Not Ask / Why, feedback, recent runs, and collapsed advanced details.
+The web interface supports sanitized paste/upload input, readiness information, the generated recommendation, feedback, recent runs, and diagnostic details.
 
-## CLI
-
-Product commands:
+### CLI
 
 ```bash
 python -m ic_copilot.cli run data/sample/incidents/revpro_early_engage.txt
@@ -60,18 +111,33 @@ python -m ic_copilot.cli validate-knowledge local_knowledge
 python -m ic_copilot.cli knowledge-status local_knowledge
 ```
 
-## Trial
-
-Run 20 real sanitized snippets, label usefulness and failure tags, then generate:
+## Local setup
 
 ```bash
-python scripts/run_personal_product_trial_report.py \
-  --db .ic_copilot/web.sqlite3 \
-  --output-md .ic_copilot/personal_trial/product_trial_report.md \
-  --output-json .ic_copilot/personal_trial/product_trial_report.json
+git clone https://github.com/josuecross/ic-copilot-v3.git
+cd ic-copilot-v3
+
+python -m venv .venv
+# Windows: .venv\Scripts\activate
+# Linux/macOS: source .venv/bin/activate
+
+pip install -e ".[dev,live-openai]"
 ```
 
-## Gates
+Copy `.env.example` to `.env` or configure the provider variables in your shell. For the live OpenAI path, set `OPENAI_API_KEY`.
+
+The normal local knowledge directory is `local_knowledge/`, which is ignored by Git.
+
+Validate it with:
+
+```bash
+python -m ic_copilot.cli validate-knowledge local_knowledge
+python -m ic_copilot.cli knowledge-status local_knowledge
+```
+
+## Evaluation and quality gates
+
+The repository includes multiple forms of validation rather than relying on a few manually inspected prompts:
 
 ```bash
 pytest -q
@@ -81,7 +147,53 @@ python scripts/run_replay_eval.py
 python scripts/run_acceptance_gate.py
 python scripts/audit_repo_conflicts.py --strict
 python scripts/audit_web_console.py
-python scripts/run_product_latency_smoke.py --knowledge-dir local_knowledge \
-  --output-json .ic_copilot/product_smoke/latency_phase136c.json \
-  --output-md .ic_copilot/product_smoke/latency_phase136c.md
 ```
+
+Evaluation assets include normal cases, adversarial cases, contract fixtures, replay data, and acceptance checks. The goal is to catch failures such as:
+
+- unsupported or fabricated entities;
+- stale questions resurfacing after they were answered;
+- unsafe or unregistered commands;
+- incorrect target selection;
+- historical-context leakage;
+- malformed structured output;
+- recommendations that are syntactically valid but not grounded in current evidence.
+
+## Engineering decisions demonstrated
+
+This project is intentionally more than an LLM wrapper. It demonstrates:
+
+- designing a typed boundary around probabilistic model output;
+- separating semantic reasoning from deterministic policy checks;
+- building fallback behavior for provider and schema failures;
+- creating reproducible evaluation fixtures for AI behavior;
+- debugging AI applications with observable intermediate state;
+- preserving human control around potentially consequential actions;
+- evolving an application while maintaining regression and architecture constraints.
+
+## Project scope
+
+IC Copilot is a **local portfolio / personal engineering project**, not a production incident-management platform. Sample and regression incidents in the repository are synthetic or sanitized evaluation material.
+
+The project intentionally does **not**:
+
+- execute remediation;
+- post to Slack;
+- page responders;
+- act as a production monitoring platform;
+- replace human operational judgment.
+
+Those boundaries are part of the design, not missing features.
+
+## Related documentation
+
+- [`ARCHITECTURE_AND_STRUCTURE_FOR_CHATGPT.md`](ARCHITECTURE_AND_STRUCTURE_FOR_CHATGPT.md) — deeper repository architecture and file map
+- [`FILE_HIERARCHY_DIAGRAM.md`](FILE_HIERARCHY_DIAGRAM.md) — project structure reference
+- [`AGENTS.md`](AGENTS.md) — coding-agent constraints used while developing the repository
+
+## Author
+
+**Josue David Cruz Lopez**  
+Costa Rica  
+GitHub: [@josuecross](https://github.com/josuecross)  
+LinkedIn: [josue-david-c](https://www.linkedin.com/in/josue-david-c/)
