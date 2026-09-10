@@ -1,5 +1,7 @@
 # IC Copilot V3
 
+[![CI](https://github.com/josuecross/ic-copilot-v3/actions/workflows/ci.yml/badge.svg)](https://github.com/josuecross/ic-copilot-v3/actions/workflows/ci.yml)
+
 **Human-in-the-loop AI decision support built with Python, FastAPI, structured outputs, deterministic verification, and regression evaluation.**
 
 IC Copilot V3 is a local-first application that turns noisy operational chat into one concise, evidence-grounded next-step recommendation. The project explores a practical engineering question: **how can an LLM be useful in a high-context workflow without giving it unrestricted authority or trusting its output blindly?**
@@ -21,7 +23,7 @@ Many AI applications stop at `prompt -> model -> text`. IC Copilot adds an engin
 - replay, regression, acceptance, and adversarial evaluation;
 - local persistence and diagnostics for inspecting application behavior.
 
-This makes the repository useful as a portfolio example of **applied AI, AI evaluation, backend engineering, developer tooling, and reliability-oriented software design**.
+This makes the repository useful as an engineering example of **applied AI, AI evaluation, backend development, developer tooling, and reliability-oriented software design**.
 
 ## Current runtime
 
@@ -90,6 +92,7 @@ Provider failures, invalid output, unsupported targets, stale questions, and uns
 - **SQLite** — local run/trace persistence
 - **pytest** — unit, integration, contract, regression, and safety tests
 - **Ruff** — static/lint checks
+- **GitHub Actions** — reproducible public CI
 
 ## Interfaces
 
@@ -103,10 +106,17 @@ The web interface supports sanitized paste/upload input, readiness information, 
 
 ### CLI
 
+Use a sanitized incident-text file that you provide locally:
+
 ```bash
-python -m ic_copilot.cli run data/sample/incidents/revpro_early_engage.txt
-python -m ic_copilot.cli normalize data/sample/incidents/revpro_early_engage.txt
-python -m ic_copilot.cli inspect-state data/sample/incidents/revpro_early_engage.txt
+python -m ic_copilot.cli run path/to/sanitized_incident.txt
+python -m ic_copilot.cli normalize path/to/sanitized_incident.txt
+python -m ic_copilot.cli inspect-state path/to/sanitized_incident.txt
+```
+
+Knowledge validation commands operate on a local knowledge directory:
+
+```bash
 python -m ic_copilot.cli validate-knowledge local_knowledge
 python -m ic_copilot.cli knowledge-status local_knowledge
 ```
@@ -128,16 +138,24 @@ Copy `.env.example` to `.env` or configure the provider variables in your shell.
 
 The normal local knowledge directory is `local_knowledge/`, which is ignored by Git.
 
-Validate it with:
-
-```bash
-python -m ic_copilot.cli validate-knowledge local_knowledge
-python -m ic_copilot.cli knowledge-status local_knowledge
-```
-
 ## Evaluation and quality gates
 
-The repository includes multiple forms of validation rather than relying on a few manually inspected prompts:
+The project uses multiple validation layers rather than relying on a few manually inspected prompts.
+
+### Public CI
+
+Every push and pull request to `main` runs in a clean GitHub-hosted environment with no API secrets or private operational data. The public gate performs:
+
+```bash
+ruff check . --select E9,F63,F7,F82
+python scripts/run_public_ci_tests.py
+```
+
+The public-safe pytest runner executes the self-contained test coverage available from a clean checkout. Modules that depend on unpublished incident corpora or local knowledge are explicitly listed in the runner instead of being allowed to fail because private inputs are absent.
+
+### Full local regression environment
+
+A development checkout that has the corresponding local regression fixtures can additionally run the broader validation set:
 
 ```bash
 pytest -q
@@ -149,7 +167,7 @@ python scripts/audit_repo_conflicts.py --strict
 python scripts/audit_web_console.py
 ```
 
-Evaluation assets include normal cases, adversarial cases, contract fixtures, replay data, and acceptance checks. The goal is to catch failures such as:
+Evaluation assets and test logic cover normal cases, adversarial cases, structured contracts, replay behavior, regression checks, and acceptance criteria. The goal is to catch failures such as:
 
 - unsupported or fabricated entities;
 - stale questions resurfacing after they were answered;
@@ -158,6 +176,8 @@ Evaluation assets include normal cases, adversarial cases, contract fixtures, re
 - historical-context leakage;
 - malformed structured output;
 - recommendations that are syntactically valid but not grounded in current evidence.
+
+See [`docs/TEST_FIXTURE_POLICY.md`](docs/TEST_FIXTURE_POLICY.md) for the public/local fixture boundary.
 
 ## Engineering decisions demonstrated
 
@@ -173,7 +193,7 @@ This project is intentionally more than an LLM wrapper. It demonstrates:
 
 ## Project scope
 
-IC Copilot is a **local portfolio / personal engineering project**, not a production incident-management platform. Sample and regression incidents in the repository are synthetic or sanitized evaluation material.
+IC Copilot is an **independent engineering project**, not a production incident-management platform. Published sample and regression material is synthetic or sanitized; private/local operational inputs are intentionally excluded from the public repository.
 
 The project intentionally does **not**:
 
@@ -189,6 +209,7 @@ Those boundaries are part of the design, not missing features.
 
 - [`ARCHITECTURE_AND_STRUCTURE_FOR_CHATGPT.md`](ARCHITECTURE_AND_STRUCTURE_FOR_CHATGPT.md) — deeper repository architecture and file map
 - [`FILE_HIERARCHY_DIAGRAM.md`](FILE_HIERARCHY_DIAGRAM.md) — project structure reference
+- [`docs/TEST_FIXTURE_POLICY.md`](docs/TEST_FIXTURE_POLICY.md) — public CI versus full local regression policy
 - [`AGENTS.md`](AGENTS.md) — coding-agent constraints used while developing the repository
 
 ## Author
